@@ -1,3 +1,5 @@
+#render pipeline for stitching together multiple clips with transitions and captions burned in, then uploading to Google Drive and notifying a callback URL
+
 import os
 import subprocess
 import tempfile
@@ -28,14 +30,6 @@ def run_ffmpeg(cmd, label=""):
 def run_pipeline(drive_folder_id, num_scenes,callback_url,record_id, image_ext="png",
                   fps=25, silence_pad=0.6, transition_duration=0.5,
                   transition_type="fade"):
-    """
-    Expects in Drive folder (drive_folder_id):
-      images/     1.{image_ext} ... N.{image_ext}
-      voices/     1.mp3 ... N.mp3
-      1.srt ... N.srt   <-- directly in the root folder, one per scene
-    Uploads final_video.mp4 back into drive_folder_id root.
-    Returns the Drive file ID + shareable link.
-    """
     service = get_drive_service()
     workdir = tempfile.mkdtemp()
 
@@ -49,6 +43,8 @@ def run_pipeline(drive_folder_id, num_scenes,callback_url,record_id, image_ext="
     images_folder_id = find_subfolder_id(service, drive_folder_id, "images")
     voices_folder_id = find_subfolder_id(service, drive_folder_id, "voices")
     # NOTE: srt files are NOT in a subfolder — they live directly in drive_folder_id
+
+
 
     clip_paths = []
     clip_durations = []
