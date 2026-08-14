@@ -51,6 +51,12 @@ Upload final_video.mp4 to Google Drive
 POST result to callback_url
 ```
 
+## Recent Updates
+
+- Changed the logic for Drive connection & refactored it a bit
+- Edited all keys
+
+
 ## Project Structure
 
 ```text
